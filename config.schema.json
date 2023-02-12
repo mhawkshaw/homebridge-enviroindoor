@@ -1,0 +1,62 @@
+{
+  "pluginAlias": "EnviroIndoorAirQuality",
+  "pluginType": "platform",
+  "singular": true,
+  "headerDisplay": "The Pimoroni Enviro Indoor Sensor provides environmental data.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "mqttbroker": {
+        "title": "MQTT Broker",
+        "type": "string",
+        "required": true,
+        "format": "uri",
+        "default": "mqtt://127.0.0.1:1883"
+      },
+      "topic": {
+        "title": "MQTT Topic",
+        "type": "string",
+        "required": true,
+        "format": "string",
+        "default": "enviro/my-air-quality"
+      },
+      "username": {
+        "title": "MQTT Broker username",
+        "type": "string",
+        "required": false,
+        "default": ""
+      },
+      "password": {
+        "title": "MQTT Broker password",
+        "type": "string",
+        "required": false,
+        "default": ""
+      },
+      "devices": {
+        "title": "Enviro Indoor Devices",
+        "type": "array",
+        "uniqueItems": true,
+        "required": true,
+        "items": {
+          "title": "Devices",
+          "type": "object",
+          "required": true,
+          "properties": {
+            "displayName": {
+              "title": "Enviro Indoor Display Name",
+              "type": "string",
+              "required": true,
+              "default": ""
+            },
+            "serial": {
+              "title": "Enviro Indoor Serial Number",
+              "type": "string",
+              "required": true,
+             "default": "1234567890"
+            }
+          }
+        }
+      }
+    }
+  }
+}
