@@ -33,6 +33,8 @@ export class EnviroIndoorSensor {
   private temperatureService: Service;
   private lightSensorService: Service;
 
+  private serialNumber = "";
+
   // Use to store the sensor data for quick retrieval
   private sensorData = {
     temperature: -270,
@@ -53,6 +55,20 @@ export class EnviroIndoorSensor {
     if (jsonData.readings.luminance <= 0) {
       this.sensorData.lux = 0.0001;
     }
+    this.serialNumber = jsonData.uid;
+  }
+
+  setAccessoryInfo(serialNumber: string): void {
+    // Only set the accessory info if the serial number has changed
+    if (this.serialNumber !== serialNumber) {
+      const accessoryInfo: Service | undefined = this.accessory.getService(this.platform.Service.AccessoryInformation);
+
+      if (accessoryInfo !== undefined) {
+        accessoryInfo.setCharacteristic(this.platform.Characteristic.Manufacturer, 'Pimoroni')
+          .setCharacteristic(this.platform.Characteristic.Model, 'EnviroIndoor')
+          .setCharacteristic(this.platform.Characteristic.SerialNumber, serialNumber);
+      }
+    }
   }
 
   shutdown() {
@@ -66,14 +82,7 @@ export class EnviroIndoorSensor {
     private readonly accessory: PlatformAccessory,
   ) {
 
-    // set accessory information
-    const accessoryInfo: Service | undefined = this.accessory.getService(this.platform.Service.AccessoryInformation);
-
-    if (accessoryInfo !== undefined) {
-      accessoryInfo.setCharacteristic(this.platform.Characteristic.Manufacturer, 'Pimoroni')
-        .setCharacteristic(this.platform.Characteristic.Model, 'EnviroIndoor')
-        .setCharacteristic(this.platform.Characteristic.SerialNumber, this.platform.config.serial);
-    }
+    this.setAccessoryInfo(accessory.UUID);
 
     this.temperatureService = this.accessory.getService(this.platform.Service.TemperatureSensor) ||
       this.accessory.addService(this.platform.Service.TemperatureSensor);
@@ -115,6 +124,7 @@ export class EnviroIndoorSensor {
       this.platform.log.debug(message.toString('utf-8'));
       const enviroIndoorData: EnviroIndoorJson = JSON.parse(message.toString('utf-8'));
       this.mapJsonData(enviroIndoorData);
+      this.setAccessoryInfo(enviroIndoorData.uid);
     });
 
     this.mqttClient.on('connect', () => {
