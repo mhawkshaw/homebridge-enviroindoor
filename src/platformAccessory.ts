@@ -33,7 +33,7 @@ export class EnviroIndoorSensor {
   private temperatureService: Service;
   private lightSensorService: Service;
 
-  private serialNumber = "";
+  private serialNumber = '';
 
   // Use to store the sensor data for quick retrieval
   private sensorData = {
