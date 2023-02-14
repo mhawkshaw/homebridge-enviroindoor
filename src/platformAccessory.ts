@@ -83,7 +83,7 @@ export class EnviroIndoorSensor {
     private readonly accessory: PlatformAccessory,
     private readonly displayName: string,
     private readonly serial: string,
-    private readonly topic: string
+    private readonly topic: string,
   ) {
 
     this.mqttTopic = topic;

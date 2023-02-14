@@ -33,7 +33,8 @@ export class EnviroIndoorPlatform implements DynamicPlatformPlugin {
     // Checks whether a configuration is provided, otherwise the plugin should not be initialized
     if (!this.configProvided()) {
       log.error('Not all configuration provided!');
-      log.info('MQTT Broker for enviroment data is required along with all the enviro indoor devices and their serial numbers, names and MQTT topics');
+      log.info('MQTT Broker for enviroment data is required along with all the enviro indoor devices and their serial numbers, names and' +
+               ' MQTT topics');
       return;
     }
 
