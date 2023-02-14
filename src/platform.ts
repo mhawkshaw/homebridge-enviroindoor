@@ -15,7 +15,11 @@ export class EnviroIndoorPlatform implements DynamicPlatformPlugin {
   public readonly accessories: PlatformAccessory[] = [];
 
   private configProvided() {
-    return this.config.mqttbroker !== null && this.config.topic !== null && this.config.serial !== null;
+    let provided = this.config.mqttbroker && this.config.devices;
+    for (const device of this.config.devices) {
+      provided = provided && device.displayName && device.serial && device.topic;
+    }
+    return provided;
   }
 
   private sensors: EnviroIndoorSensor[] = [];
@@ -29,7 +33,7 @@ export class EnviroIndoorPlatform implements DynamicPlatformPlugin {
     // Checks whether a configuration is provided, otherwise the plugin should not be initialized
     if (!this.configProvided()) {
       log.error('Not all configuration provided!');
-      log.info('MQTT Broker for enviroment data is required along with the serial number of the enviro indoor device');
+      log.info('MQTT Broker for enviroment data is required along with all the enviro indoor devices and their serial numbers, names and MQTT topics');
       return;
     }
 
@@ -86,7 +90,7 @@ export class EnviroIndoorPlatform implements DynamicPlatformPlugin {
 
         // create the accessory handler for the restored accessory
         // this is imported from `platformAccessory.ts`
-        this.sensors.push(new EnviroIndoorSensor(this, existingAccessory));
+        this.sensors.push(new EnviroIndoorSensor(this, existingAccessory, device.displayName, device.serial, device.topic));
       } else {
         // the accessory does not yet exist, so we need to create it
         this.log.info('Adding new accessory:', device.displayName);
@@ -100,7 +104,7 @@ export class EnviroIndoorPlatform implements DynamicPlatformPlugin {
 
         // create the accessory handler for the newly create accessory
         // this is imported from `platformAccessory.ts`
-        this.sensors.push(new EnviroIndoorSensor(this, accessory));
+        this.sensors.push(new EnviroIndoorSensor(this, accessory, device.displayName, device.serial, device.topic));
 
         // link the accessory to your platform
         this.api.registerPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [accessory]);

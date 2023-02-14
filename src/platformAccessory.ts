@@ -34,6 +34,7 @@ export class EnviroIndoorSensor {
   private lightSensorService: Service;
 
   private serialNumber = '';
+  private mqttTopic = '';
 
   // Use to store the sensor data for quick retrieval
   private sensorData = {
@@ -73,16 +74,20 @@ export class EnviroIndoorSensor {
 
   shutdown() {
     this.platform.log.debug('Shutdown called. Unsubscribing from MQTT broker.');
-    this.mqttClient.unsubscribe(this.platform.config.topic);
+    this.mqttClient.unsubscribe(this.mqttTopic);
     this.mqttClient.end();
   }
 
   constructor(
     private readonly platform: EnviroIndoorPlatform,
     private readonly accessory: PlatformAccessory,
+    private readonly displayName: string,
+    private readonly serial: string,
+    private readonly topic: string
   ) {
 
-    this.setAccessoryInfo(accessory.UUID);
+    this.mqttTopic = topic;
+    this.setAccessoryInfo(serial);
 
     this.temperatureService = this.accessory.getService(this.platform.Service.TemperatureSensor) ||
       this.accessory.addService(this.platform.Service.TemperatureSensor);
@@ -130,7 +135,7 @@ export class EnviroIndoorSensor {
     this.mqttClient.on('connect', () => {
       this.platform.log.info('Connected to MQTT broker');
 
-      this.mqttClient.subscribe(this.platform.config.topic, { qos: 0 }, (error, granted) => {
+      this.mqttClient.subscribe(this.mqttTopic, { qos: 0 }, (error, granted) => {
         if (error) {
           this.platform.log.error('Unable to connect to the MQTT broker: ' + error.name + ' ' + error.message);
         } else {

@@ -13,13 +13,6 @@
         "format": "uri",
         "default": "mqtt://127.0.0.1:1883"
       },
-      "topic": {
-        "title": "MQTT Topic",
-        "type": "string",
-        "required": true,
-        "format": "string",
-        "default": "enviro/my-air-quality"
-      },
       "username": {
         "title": "MQTT Broker username",
         "type": "string",
@@ -53,6 +46,13 @@
               "type": "string",
               "required": true,
              "default": "1234567890"
+            },
+            "topic": {
+              "title": "MQTT Topic",
+              "type": "string",
+              "required": true,
+              "format": "string",
+              "default": "enviro/my-air-quality"
             }
           }
         }

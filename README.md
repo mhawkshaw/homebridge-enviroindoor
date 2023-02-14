@@ -62,15 +62,14 @@ The plug-in needs to know where to find the MQTT broker providing the JSON data 
   "platforms": [
     {
       "platform": "EnviroIndoorAirQuality",
-      "name": "EnviroIndoorPlatform",
-      "server": "mqtt://127.0.0.1:1883",
-      "topic": "enviro/my-air-quality",
+      "mqttbroker": "mqtt://127.0.0.1:1883",
       "username": "",
       "password": "",
       "devices": [
         {
           "displayName": "My Enviro Indoor Sensor",
-          "serial": "1234567890"
+          "serial": "1234567890",
+          "topic": "enviro/my-air-quality"
         }
       ]
     }
