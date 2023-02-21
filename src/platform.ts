@@ -15,7 +15,7 @@ export class EnviroIndoorPlatform implements DynamicPlatformPlugin {
   public readonly accessories: PlatformAccessory[] = [];
 
   private configProvided() {
-    let provided = this.config.mqttbroker && this.config.devices;
+    let provided = this.config.mqttbroker && this.config.devices && Array.isArray(this.config.devices) && this.config.devices.length !== 0;
     for (const device of this.config.devices) {
       provided = provided && device.displayName && device.serial && device.topic;
     }
