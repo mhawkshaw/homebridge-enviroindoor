@@ -15,10 +15,18 @@ export class EnviroIndoorPlatform implements DynamicPlatformPlugin {
   public readonly accessories: PlatformAccessory[] = [];
 
   private configProvided() {
-    let provided = this.config.mqttbroker && this.config.devices && Array.isArray(this.config.devices) && this.config.devices.length !== 0;
-    for (const device of this.config.devices) {
-      provided = provided && device.displayName && device.serial && device.topic;
+    let provided = this.config.mqttbroker;
+    if (this.config.devices && Array.isArray(this.config.devices) && this.config.devices.length !== 0) {
+      for (const device of this.config.devices) {
+        if (device) {
+          provided = provided && device.displayName && device.serial && device.topic;
+        }
+      }
+    } else if (this.config.devices) {
+      provided = false;
+      this.log.error('The devices property is not of type array. Cannot initialise. Type %s', typeof this.config.devices);
     }
+
     return provided;
   }
 
@@ -34,7 +42,7 @@ export class EnviroIndoorPlatform implements DynamicPlatformPlugin {
     if (!this.configProvided()) {
       log.error('Not all configuration provided!');
       log.info('MQTT Broker for enviroment data is required along with all the enviro indoor devices and their serial numbers, names and' +
-               ' MQTT topics');
+        ' MQTT topics');
       return;
     }
 
