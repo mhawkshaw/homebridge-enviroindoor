@@ -83,4 +83,4 @@ The following settings are optional:
 - `username`: the MQTT broker username
 - `password`: the MQTT broker password
 
-If you have multiple Enviro Indoor devices, then you can list them all in the config giving each one a unique name and serial number.
+If you have multiple Enviro Indoor devices, then you can list them all in the config giving each one a unique name, MQTT topic and serial number.
