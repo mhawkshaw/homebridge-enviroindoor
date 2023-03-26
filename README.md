@@ -10,6 +10,8 @@
 
 This Homebridge plug-in allows you to make the data available from the [Pimoroni Enviro Indoor](https://learn.pimoroni.com/article/getting-started-with-enviro) device.
 
+[![verified-by-homebridge](https://badgen.net/badge/homebridge/verified/purple)](https://github.com/homebridge/homebridge/wiki/Verified-Plugins)
+
 ## Setup MQTT broker
 
 This Homebridge plug-in reads the data from an MQTT broker providing the JSON information, for example:
@@ -55,13 +57,14 @@ Add platform to `config.json`, for configuration see below.
 
 ## Plug-in Configuration
 
-The plug-in needs to know where to find the MQTT broker providing the JSON data (e.g. mqtt://127.0.0.1:1883) along with the serial number of the device to uniquely identify it (you can also use your Raspberry Pi identifier).
+The plug-in needs to know where to find the MQTT broker providing the JSON data (e.g. mqtt://127.0.0.1:1883) along with the serial number of the device to uniquely identify it (you can also use your Raspberry Pi Pico identifier).
 
 ```json
 {
   "platforms": [
     {
       "platform": "EnviroIndoorAirQuality",
+      "name": "EnviroIndoor",
       "mqttbroker": "mqtt://127.0.0.1:1883",
       "username": "",
       "password": "",
