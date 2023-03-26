@@ -4,13 +4,13 @@
   "singular": true,
   "headerDisplay": "The Pimoroni Enviro Indoor Sensor provides environmental data.",
   "schema": {
-    "name": {
-      "type": "string",
-      "title": "Plugin name as shown in Homebridge Log",
-      "default": "EnviroIndoor"
-    },
     "type": "object",
     "properties": {
+      "name": {
+        "type": "string",
+        "title": "Plugin name as shown in Homebridge Log",
+        "default": "EnviroIndoor"
+      },
       "mqttbroker": {
         "title": "MQTT Broker",
         "type": "string",
