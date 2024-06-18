@@ -1,8 +1,8 @@
 import { Service, PlatformAccessory } from 'homebridge';
 
-import { EnviroIndoorPlatform } from './platform';
+import { EnviroIndoorPlatform } from './platform.js';
 
-import { Client, connect } from 'mqtt';
+import { MqttClient, connect } from 'mqtt';
 
 interface EnviroIndoorReadingsJson {
   pressure: number;
@@ -43,7 +43,7 @@ export class EnviroIndoorSensor {
     lux: 0.0001,
   };
 
-  private mqttClient: Client;
+  private mqttClient: MqttClient;
 
   /**
    * Maps the JSON data received from the MQTT broker originating from the Enviro sensor to the internal structure we need
@@ -140,7 +140,7 @@ export class EnviroIndoorSensor {
           this.platform.log.error('Unable to connect to the MQTT broker: ' + error.name + ' ' + error.message);
         } else {
           // If we're re-connecting then the existing topic subscription should still be persisted.
-          if (granted.length > 0) {
+          if (granted && granted.length > 0) {
             this.platform.log.debug(granted[0].topic + ' was subscribed');
           }
         }
