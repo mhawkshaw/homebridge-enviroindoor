@@ -1,9 +1,10 @@
 {
   "displayName": "Homebridge Enviro Indoor",
   "name": "homebridge-enviroindoor",
-  "version": "1.0.12",
+  "version": "1.1.0",
   "description": "Fetches information from Enviro Indoor sensors for air quality.",
   "license": "Apache-2.0",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mhawkshaw/homebridge-enviroindoor.git"
