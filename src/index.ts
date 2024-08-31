@@ -1,4 +1,4 @@
-import { API } from 'homebridge';
+import type { API } from 'homebridge';
 
 import { PLATFORM_NAME } from './settings.js';
 import { EnviroIndoorPlatform } from './platform.js';
@@ -6,6 +6,6 @@ import { EnviroIndoorPlatform } from './platform.js';
 /**
  * This method registers the platform with Homebridge
  */
-export default (api: API): void => {
+export default (api: API) => {
   api.registerPlatform(PLATFORM_NAME, EnviroIndoorPlatform);
 };

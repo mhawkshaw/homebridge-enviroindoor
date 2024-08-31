@@ -1,6 +1,6 @@
-import { Service, PlatformAccessory } from 'homebridge';
+import type { Service, PlatformAccessory } from 'homebridge';
 
-import { EnviroIndoorPlatform } from './platform.js';
+import type { EnviroIndoorPlatform } from './platform.js';
 
 import { MqttClient, connect } from 'mqtt';
 
@@ -62,13 +62,10 @@ export class EnviroIndoorSensor {
   setAccessoryInfo(serialNumber: string): void {
     // Only set the accessory info if the serial number has changed
     if (this.serialNumber !== serialNumber) {
-      const accessoryInfo: Service | undefined = this.accessory.getService(this.platform.Service.AccessoryInformation);
-
-      if (accessoryInfo !== undefined) {
-        accessoryInfo.setCharacteristic(this.platform.Characteristic.Manufacturer, 'Pimoroni')
-          .setCharacteristic(this.platform.Characteristic.Model, 'EnviroIndoor')
-          .setCharacteristic(this.platform.Characteristic.SerialNumber, serialNumber);
-      }
+      this.accessory.getService(this.platform.Service.AccessoryInformation)!
+        .setCharacteristic(this.platform.Characteristic.Manufacturer, 'Pimoroni')
+        .setCharacteristic(this.platform.Characteristic.Model, 'EnviroIndoor')
+        .setCharacteristic(this.platform.Characteristic.SerialNumber, serialNumber);
     }
   }
 
