@@ -2,6 +2,7 @@
   "pluginAlias": "EnviroIndoorAirQuality",
   "pluginType": "platform",
   "singular": true,
+  "strictValidation": false,
   "headerDisplay": "The Pimoroni Enviro Indoor Sensor provides environmental data.",
   "schema": {
     "type": "object",
